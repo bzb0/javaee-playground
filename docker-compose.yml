@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  mariadb:
+    image: "mariadb:${MARIADB_VERSION}"
+    restart: "always"
+    container_name: "mariadb"
+    volumes:
+      - /var/docker/mariadb/conf:/etc/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+  appserver:
+    image: bzb0/javaee-playground:1.0-SNAPSHOT
+    build:
+      context: .
+      args:
+        - DB_HOST=mariadb
+        - DB_PORT=3306
+        - DB_SCHEMA=javaee-playground
+        - DB_USER=javaee
+        - DB_PASS=s3cr3t
+        - WAR_FILE=target/javaee-playground.war
+    environment:
+      WAIT_HOSTS: "mariadb:3306"
+    container_name: javaee-playground
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    restart: "always"

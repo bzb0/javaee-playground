@@ -29,12 +29,16 @@ public class MathCalculator {
    * @param exponent The exponent.
    * @return Base raised to the power of exponent.
    */
-  public Integer power(Integer base, Integer exponent) {
+  public Number power(Integer base, Integer exponent) {
     Bindings bindings = new SimpleBindings(Stream.of(new SimpleEntry<>("base", base), new SimpleEntry<>("exponent", exponent))
         .collect(toMap(SimpleEntry::getKey, SimpleEntry::getValue)));
     try {
-      Double result = (Double) jsEngine.eval(JS_POWER_SCRIPT, bindings);
-      return result.intValue();
+      Object result = jsEngine.eval(JS_POWER_SCRIPT, bindings);
+      if (result instanceof Number) {
+        return (Number) result;
+      } else {
+        throw new IllegalArgumentException("Unknown result type: " + result.getClass());
+      }
     } catch (ScriptException e) {
       e.printStackTrace();
       return -1;
