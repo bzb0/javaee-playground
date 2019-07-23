@@ -74,7 +74,7 @@ public class ExecutorResource {
   @GET
   @Path("/power")
   @Produces(MediaType.TEXT_PLAIN)
-  public Integer calculatePower(@QueryParam("base") int base, @QueryParam("exponent") int exponent) {
+  public Number calculatePower(@QueryParam("base") int base, @QueryParam("exponent") int exponent) {
     return calculator.power(base, exponent);
   }
 

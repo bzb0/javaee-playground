@@ -6,7 +6,7 @@
   <persistence-unit name="mariadb" transaction-type="JTA">
       <jta-data-source>java:jboss/datasources/MariaDBDS</jta-data-source>
       <properties>
-          <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javaee-playground"/>
+          <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mariadb:3306/javaee-playground"/>
           <property name="javax.persistence.jdbc.user" value="javaee"/>
           <property name="javax.persistence.jdbc.password" value="s3cr3t"/>
           <property name="javax.persistence.jdbc.driver" value="com.mysql.driver"/>
